@@ -9,6 +9,7 @@ export const endpoints = {
     recentRecipes: `/classes/Recipe?limit=${homePageSize}&order=-createdAt`,
     recipeById: '/classes/Recipe/',
     recipeDetails: (id) => `/classes/Recipe/${id}?include=owner`,
+    categories: '/classes/Category'
 };
 
 export function createPointer(className, objectId) {
