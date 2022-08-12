@@ -49,6 +49,5 @@ input.error, textarea.error {
 }
 
 p.error {
-    color:rgb(240, 0, 0);
-    font-weight: bold;
+    color: red;
 }
