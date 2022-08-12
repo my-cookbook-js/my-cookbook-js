@@ -1,10 +1,8 @@
-import { logout } from '../api/user.js';
 import { render } from '../lib.js';
 import { getUserData } from '../utils.js';
 
 
 const root = document.getElementById('content');
-document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
 function boundRender(content) {
     render(content, root);
@@ -26,10 +24,4 @@ export function updateUserNav() {
         document.getElementById('user').style.display = 'none';
         document.getElementById('guest').style.display = 'inline-block';
     }
-}
-
-function onLogout() {
-    logout();
-    updateUserNav();
-    page.redirect('/');
 }
