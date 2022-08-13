@@ -14,3 +14,10 @@ export const field = ({label, type = 'text', name, value = '', placeholder = '',
     }
 };
 
+export const errorMsg = (errors) => {
+    if (errors) {
+        return html`<p class="error">${errors.message}</p>`;
+    } else {
+        return null;
+    }
+};

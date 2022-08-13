@@ -1,7 +1,7 @@
 import { login } from '../api/user.js';
 import { html } from '../lib.js';
 import { createSubmitHandler } from '../utils.js';
-import { field } from './common.js';
+import { errorMsg, field } from './common.js';
 
 
 const loginTemplate = (onSubmit, errors, data) => html`
@@ -9,7 +9,8 @@ const loginTemplate = (onSubmit, errors, data) => html`
     <article>
         <h2>Login</h2>
         <form @submit=${onSubmit} id="loginForm">
-            ${errors ? html`<p class="error">${errors.message}</p>` : null}
+            ${errorMsg(errors)}
+
             ${field({label: 'Username', name: 'username', value: data.username, error: errors.username})}
             ${field({label: 'Password', type: 'password', name: 'password', error: errors.password})}
             <input type="submit" value="Login">

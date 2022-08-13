@@ -1,4 +1,4 @@
-import { getRecentRecipies } from '../api/recipe.js';
+import { getRecentRecipes } from '../api/recipe.js';
 import { html, until } from '../lib.js';
 import { spinner } from './common.js';
 
@@ -12,7 +12,7 @@ const homeTemplate = (dataPromise) => html`
     <div class="recent-recipes">
         
         ${until(dataPromise, spinner())}
-
+        
     </div>
     <footer class="section-title">
         <p>Browse all recipes in the <a href="/recipes">Catalog</a></p>
@@ -32,7 +32,7 @@ export function homePage(ctx) {
 }
 
 async function loadData() {
-    const {results: data} = await getRecentRecipies();
+    const {results: data} = await getRecentRecipes();
     
     if (data.length == 0) {
         return html`<p>No recipes found.</p>`;

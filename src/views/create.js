@@ -2,7 +2,7 @@ import { getCategories } from '../api/category.js';
 import { createRecipe } from '../api/recipe.js';
 import { html } from '../lib.js';
 import { createSubmitHandler } from '../utils.js';
-import { field } from './common.js';
+import { errorMsg, field } from './common.js';
 
 
 const createTemplate = (onSubmit, errors, data, categories) => html`
@@ -10,8 +10,7 @@ const createTemplate = (onSubmit, errors, data, categories) => html`
     <article>
         <h2>New Recipe</h2>
         <form @submit=${onSubmit} id="createForm">
-            ${errors ? html`<p class="error">${errors.message}</p>` : null}
-
+            ${errorMsg(errors)}
 
             <label>Category:<select name="category">
                 ${categories.map(c => html`<option value = ${c.objectId}>${c.name}</option>`)}

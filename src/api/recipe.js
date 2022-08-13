@@ -2,30 +2,48 @@ import * as api from './api.js';
 import { endpoints, addOwner } from './data.js';
 
 
-export async function getRecipes(page, search) {
-    // let url = endpoints.recipes + `&offset=${(page - 1) * PAGE_SIZE}&pageSize=${PAGE_SIZE}`;
-    // if (search) {
-    //     url += '&where=' + encodeURIComponent(`name like "${search}"`);
-    // }
-    return await api.get(endpoints.recipes);
+const pageSize = 5;
+
+export async function getRecentRecipes() {
+    return api.get(endpoints.recentRecipes);
 }
 
+export async function getRecipes(page, query) {
+    const data = await (() => {
+        if (query) {
+            query = {
+                name: {
+                    $regex: query,
+                    $options: 'i'
+                    // $text: {
+                    //     $search: {
+                    //         $term: query,
+                    //         $caseSensitive: false
+                    //     }
+                    // }
+                }
+            };
+            return api.get(endpoints.recipeSearch(page, query, pageSize));
+        } else {
+            return api.get(endpoints.recipes(page, pageSize));
+        }
+    })();
 
-export async function getRecentRecipies() {
-    return api.get(endpoints.recentRecipes);
+    data.pages = Math.ceil(data.count / pageSize);
+    return data;
 }
 
 export async function getRecipeById(id) {
     return api.get(endpoints.recipeDetails(id));
 }
 
-export async function createRecipe(data) {
-    addOwner(data); 
-    return api.post(endpoints.recipes, data);
+export async function createRecipe(recipe) {
+    addOwner(recipe);
+    return api.post(endpoints.createRecipe, recipe);
 }
 
-export async function editRecipe(id, data) {
-    return api.put(endpoints.recipeById + id, data);
+export async function updateRecipe(id, recipe) {
+    return api.put(endpoints.recipeById + id, recipe);
 }
 
 export async function deleteRecipe(id) {

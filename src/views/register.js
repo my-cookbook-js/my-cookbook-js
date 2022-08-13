@@ -1,7 +1,7 @@
 import { register } from '../api/user.js';
 import { html } from '../lib.js';
 import { createSubmitHandler } from '../utils.js';
-import { field } from './common.js';
+import { errorMsg, field } from './common.js';
 
 
 const registerTemplate = (onSubmit, errors, data) => html`
@@ -9,7 +9,7 @@ const registerTemplate = (onSubmit, errors, data) => html`
     <article>
         <h2>Register</h2>
         <form @submit=${onSubmit} id="loginForm">
-            ${errors ? html`<p class="error">${errors.message}</p>` : null}
+            ${errorMsg(errors)}
 
             ${field({label: 'Username', name: 'username', value: data.username, error: errors.username})}
             ${field({label: 'E-Mail', name: 'email', value: data.email, error: errors.email})}
