@@ -6,9 +6,8 @@ export const endpoints = {
     recipes: (page, pageSize) => `/classes/Recipe?skip=${(page - 1) * pageSize}&limit=${pageSize}&order=name&count=1`,
     recipesByCategory: (categoryId, page, pageSize) => `/classes/Recipe?where=${createPointerQuery('category', 'Category', categoryId)}&skip=${(page - 1) * pageSize}&limit=${pageSize}&order=name&count=1`,
     recipeSearch: (query, page, pageSize) => `/classes/Recipe?where=${createQuery(query)}&skip=${(page - 1) * pageSize}&limit=${pageSize}&order=name&count=1`,
-    recipeDetails: (id) => `/classes/Recipe/${id}?include=owner`,
+    recipeById: (id) => `/classes/Recipe/${id}?include=category`,
     createRecipe: '/classes/Recipe',
-    recipeById: '/classes/Recipe/',
     categories: '/classes/Category'
 };
 

@@ -32,7 +32,7 @@ export async function getRecipes(page, query, categoryId) {
 }
 
 export async function getRecipeById(id) {
-    return api.get(endpoints.recipeDetails(id));
+    return api.get(endpoints.recipeById(id));
 }
 
 export async function createRecipe(recipe) {
