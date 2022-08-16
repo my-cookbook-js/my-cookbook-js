@@ -15,7 +15,7 @@ const homeTemplate = (dataPromise) => html`
         
     </div>
     <footer class="section-title">
-        <p>Browse all recipes in the <a href="/recipes">Catalog</a></p>
+        <p>Browse all recipes in the <a href="/recipes/all">Catalog</a></p>
     </footer>
 </section>`;
 

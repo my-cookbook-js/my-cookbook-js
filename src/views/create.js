@@ -38,7 +38,8 @@ const createTemplate = (onSubmit, errors, data, categories) => html`
 </section>`;
 
 export async function createPage(ctx) {
-    const categories = (await getCategories()).results;
+    const categories = ctx.categories;
+
     update();
     
     function update(errors = {}, data = {}) {

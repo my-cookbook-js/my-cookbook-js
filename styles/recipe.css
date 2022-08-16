@@ -58,6 +58,7 @@ article h2 {
 
 .preview {
     vertical-align: middle;
+    height: 166px;
 }
 
 .preview::after {
@@ -85,6 +86,7 @@ article h2 {
     float: left;
     background-color: white;
     width: 300px;
+    height: 166px;
     text-align: center;
     border-radius: 0 16px 16px 0;
 }

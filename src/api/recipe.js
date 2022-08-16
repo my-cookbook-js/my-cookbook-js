@@ -2,35 +2,33 @@ import * as api from './api.js';
 import { endpoints, addOwner } from './data.js';
 
 
-const pageSize = 5;
+export const pageSize = 5;
 
 export async function getRecentRecipes() {
     return api.get(endpoints.recentRecipes);
 }
 
-export async function getRecipes(page, query) {
-    const data = await (() => {
-        if (query) {
-            query = {
-                name: {
-                    $regex: query,
-                    $options: 'i'
-                    // $text: {
-                    //     $search: {
-                    //         $term: query,
-                    //         $caseSensitive: false
-                    //     }
-                    // }
-                }
-            };
-            return api.get(endpoints.recipeSearch(page, query, pageSize));
-        } else {
-            return api.get(endpoints.recipes(page, pageSize));
-        }
-    })();
-
-    data.pages = Math.ceil(data.count / pageSize);
-    return data;
+export async function getRecipes(page, query, categoryId) {
+    if (categoryId) {
+        return api.get(endpoints.recipesByCategory(categoryId, page, pageSize));
+    }
+    if (query) {
+        query = {
+            name: {
+                $regex: query,
+                $options: 'i'
+                // $text: {
+                //     $search: {
+                //         $term: query,
+                //         $caseSensitive: false
+                //     }
+                // }
+            }
+        };
+        return api.get(endpoints.recipeSearch(query, page, pageSize));
+    } else {
+        return api.get(endpoints.recipes(page, pageSize));
+    }
 }
 
 export async function getRecipeById(id) {
