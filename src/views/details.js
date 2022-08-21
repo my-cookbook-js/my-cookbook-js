@@ -1,5 +1,5 @@
 import { getRecipeById, deleteRecipe } from '../api/recipe.js';
-import { html, until } from '../lib.js';
+import { html, until, showModal } from '../lib.js';
 import { spinner } from './common.js';
 
 
@@ -32,18 +32,22 @@ const recipeCard = (recipe, isOwner, onDelete) => html`
 
 const controls = (id, onDelete) => html`
 <div class="controls">
-    <a class="actionLink" href="recipes/details/edit/${id}">&#x270e; Edit</a>
+    <a class="actionLink" href="/recipes/details/edit/${id}">&#x270e; Edit</a>
     <a @click=${onDelete} class="actionLink" href="javascript:void(0)">&#x2716; Delete</a>
 </div>`;
 
 export function detailsPage(ctx) {
-    ctx.render(detailsTemplate(loadData(ctx.params.id, ctx.user, onDelete)));
+    const recipeId = ctx.params.id;
+    ctx.render(detailsTemplate(loadData(recipeId, ctx.user, onDelete)));
     
-    async function onDelete() {
-        const choice = confirm('Are you sure you want to delete this recipe?');
+    function onDelete() {
+        ctx.showModal('Are you sure you want to delete this recipe?', onSelect);
+    }
 
+    async function onSelect(choice) {
         if (choice) {
-            await deleteRecipe(ctx.params.id);
+            await deleteRecipe(recipeId);
+            ctx.notify('Recipe deleted');
             ctx.page.redirect('/recipes');
         }
     }

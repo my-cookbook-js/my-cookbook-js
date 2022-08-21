@@ -1,19 +1,38 @@
-import { createRecipe } from '../api/recipe.js';
-import { html, classMap } from '../lib.js';
+import { getRecipeById, updateRecipe } from '../api/recipe.js';
+import { html, until } from '../lib.js';
 import { createSubmitHandler } from '../utils.js';
 import { errorMsg, field } from './common.js';
+import { spinner } from './common.js';
 
 
-const createTemplate = (onSubmit, errors, data, categories) => html`
-<section id="create">
+const editTemplate = (onSubmit, dataPromise, categories, errors) => html`
+<section id="edit">
+    ${until((async () => formTemplate(await dataPromise, onSubmit, categories, errors))(), spinner())} 
+</section>`;
+
+function formTemplate(data, onSubmit, categories, errors) {
+    if (Array.isArray(data.ingredients)) {
+        data.ingredients = (data.ingredients || []).join('\n');
+        data.steps = (data.steps || []).join('\n');
+    }
+    const categoryId = data.category.objectId;
+
+    function optionTemplate({name, objectId}) {
+        if (objectId == categoryId) {
+            return html`<option value=${objectId} selected>${name}</option>`;
+        } else {
+            return html`<option value=${objectId}>${name}</option>`;
+        }
+    }
+
+    return html`
     <article>
-        <h2>New Recipe</h2>
-        <form @submit=${onSubmit} id="createForm">
+        <h2>Edit Recipe</h2>
+        <form @submit=${onSubmit} id="editForm">
             ${errorMsg(errors)}
 
-            <label>Category:<select class=${classMap({error: errors.category})} name="category">
-                <option value="none" selected disabled hidden>Select an Option</option>
-                ${categories.map(c => html`<option value = ${c.objectId}>${c.name}</option>`)}
+            <label>Category:<select name="category">
+                ${categories.map(optionTemplate)}
             </select></label>
 
             ${field({label: 'Name', name: 'name', placeholder: 'Recipe name', value: data.name, error: errors.name})}
@@ -32,18 +51,20 @@ const createTemplate = (onSubmit, errors, data, categories) => html`
                 placeholder: 'Enter preparation steps on separate lines', 
                 value: data.steps, 
                 error: errors.steps})}
-            <input type="submit" value="Create Recipe">
+            <input type="submit" value="Save Changes">
         </form>
-    </article>
-</section>`;
+    </article>`;
+}
 
-export async function createPage(ctx) {
+export function editPage(ctx) {
     const categories = ctx.categories;
-
+    const recipeId = ctx.params.id;
+    const recipePromise = getRecipeById(recipeId);
+    
     update();
     
-    function update(errors = {}, data = {}) {
-        ctx.render(createTemplate(createSubmitHandler(onSubmit, 'name', 'img', 'ingredients', 'steps', 'category'), errors, data, categories));
+    function update(errors = {}, data = recipePromise) {
+        ctx.render(editTemplate(createSubmitHandler(onSubmit, 'name', 'img', 'ingredients', 'steps', 'category'), data, categories, errors)); 
     }
     
     async function onSubmit(data, event) {
@@ -65,15 +86,14 @@ export async function createPage(ctx) {
                     objectId: data.category
                 }
             };
-        
-            const result = await createRecipe(recipe);
+            
+            const result = await updateRecipe(ctx.params.id, recipe);
             event.target.reset();
-            ctx.notify('Recipe created');
-            ctx.page.redirect('/recipes/details/' + result.objectId);
+            ctx.notify('Recipe updated');
+            ctx.page.redirect('/recipes/details/' + recipeId);
 
         } catch (err) {
             update(err, data);
         }
     }
 }
-

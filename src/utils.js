@@ -15,6 +15,10 @@ export function createSubmitHandler(callback, ...fields) {
         event.preventDefault();
         const formData = new FormData(event.target);
 
+        if (formData.get('category') == null) {
+            formData.set('category', '');
+        }
+  
         const data = fields.reduce((a, c) => Object.assign(a, { [c]: formData.get(c).trim() }), {});
 
         callback(data, event);

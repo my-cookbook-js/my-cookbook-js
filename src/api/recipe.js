@@ -41,9 +41,9 @@ export async function createRecipe(recipe) {
 }
 
 export async function updateRecipe(id, recipe) {
-    return api.put(endpoints.recipeById + id, recipe);
+    return api.put(endpoints.createRecipe + '/' + id, recipe);
 }
 
 export async function deleteRecipe(id) {
-    return api.del(endpoints.recipeById + id);
+    return api.del(endpoints.createRecipe + '/' + id);
 }

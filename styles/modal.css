@@ -9,7 +9,7 @@
 
 #modal {
     background-color: #cccccc;
-    width: 300px;
+    width: 400px;
     margin: auto;
     margin-top: 15vh;
     border-radius: 16px;
@@ -25,9 +25,12 @@
 #modal button {
     border: none;
     margin: auto;
+    margin-right: 10px;
+    margin-left: 10px;
     background-color: salmon;
     padding: 8px 16px;
     color: black;
+    border-radius: 5px;
 }
 
 #modal button:hover {
