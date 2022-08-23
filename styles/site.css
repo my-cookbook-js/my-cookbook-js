@@ -157,3 +157,37 @@ a:visited {
 #searchForm input[type="submit"] {
     display: inline-block;
 }
+
+#site-footer {
+    height: 60px;
+    background-color: #cccccc;
+}
+
+#site-footer div {
+    display: inline-block;
+}
+
+.copyright {
+    margin-left: 20px;
+    margin-top: 19px
+}
+
+.contacts {
+    float: right;
+    margin-right: 20px;
+    margin-top: 9px;
+}
+
+.contacts p {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.contacts p:first-child {
+    float:inline-start;
+    padding-top: 9px;
+}
+
+.contacts i {
+    color: black;
+}

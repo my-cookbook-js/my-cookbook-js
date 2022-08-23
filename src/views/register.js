@@ -46,6 +46,7 @@ export function registerPage(ctx) {
             await register(data.username, data.email, data.password);
             event.target.reset();
             ctx.updateUserNav();
+            ctx.updateSession();
             ctx.page.redirect('/recipes');
 
         } catch (err) {

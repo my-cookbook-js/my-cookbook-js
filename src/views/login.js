@@ -38,6 +38,7 @@ export function loginPage(ctx) {
             await login(username, password);
             event.target.reset();
             ctx.updateUserNav();
+            ctx.updateSession();
             ctx.page.redirect('/recipes');
 
         } catch (err) {

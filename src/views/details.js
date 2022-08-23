@@ -1,5 +1,5 @@
 import { getRecipeById, deleteRecipe } from '../api/recipe.js';
-import { html, until, showModal } from '../lib.js';
+import { html, until } from '../lib.js';
 import { spinner } from './common.js';
 
 
@@ -44,7 +44,7 @@ const controls = (id, onDelete) => html`
 export function detailsPage(ctx) {
     const recipeId = ctx.params.id;
     ctx.render(detailsTemplate(loadData(recipeId, ctx.user, onDelete)));
-    
+
     function onDelete() {
         ctx.showModal('Are you sure you want to delete this recipe?', onSelect);
     }
