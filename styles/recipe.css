@@ -14,6 +14,11 @@ article h2 {
     border-radius: 16px 16px 0 0;
 }
 
+article h2 span {
+    float: right;
+    font-weight: normal;
+}
+
 .band {
     background-color: white;
     padding: 32px;
@@ -38,6 +43,7 @@ article h2 {
 .ingredients {
     float: left;
     margin-left: 32px;
+    width: 420px;
 }
 
 .ingredients>ul {

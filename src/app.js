@@ -16,13 +16,12 @@ import { editPage } from './views/edit.js';
 page(decorateContext());
 page(addSession());
 page(notify());
-page(showModal());
 page('/', homePage);
 page('/login', loginPage);
 page('/register', registerPage);
 page('/recipes', categories(), catalogPage);
 page('/recipes/create', categories(), createPage);
-page('/recipes/details/:id', detailsPage);
+page('/recipes/details/:id', showModal(), detailsPage);
 page('/recipes/details/edit/:id', categories(), editPage);
 
 page.start();

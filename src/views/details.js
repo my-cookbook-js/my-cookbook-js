@@ -11,10 +11,15 @@ const detailsTemplate = (dataPromise) => html`
 
 const recipeCard = (recipe, isOwner, onDelete) => html`
 <article>
-    <h2>${recipe.name}</h2>
+    <h2>
+        ${recipe.name}
+        <span>${new Date(recipe.createdAt).toLocaleDateString('bg-BG')}</span>
+    </h2>
     <div class="band">
         <div class="thumb"><img src=${recipe.img}></div>
         <div class="ingredients">
+            <h3>Author: <span><a href="/recipes?author=${recipe.owner.objectId}">${recipe.owner.username}</a></span></h3>
+            <br/>
             <h3>Category: <span>${recipe.category.name}</span></h3>
             <br/>
             <h3>Ingredients:</h3>

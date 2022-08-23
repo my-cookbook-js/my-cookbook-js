@@ -8,7 +8,13 @@ export async function getRecentRecipes() {
     return api.get(endpoints.recentRecipes);
 }
 
-export async function getRecipes(page, query, categoryId) {
+export async function getRecipes(page, query, categoryId, ownerId) {
+    if (ownerId && categoryId) {
+        return api.get(endpoints.recipesByOwnerAndCategory(ownerId, categoryId, page, pageSize));
+    }
+    if (ownerId) {
+        return api.get(endpoints.recipesByOwner(ownerId, page, pageSize));
+    }
     if (categoryId) {
         return api.get(endpoints.recipesByCategory(categoryId, page, pageSize));
     }
@@ -46,4 +52,8 @@ export async function updateRecipe(id, recipe) {
 
 export async function deleteRecipe(id) {
     return api.del(endpoints.createRecipe + '/' + id);
+}
+
+export async function getId(ownerId, page, pageSize) {
+    return api.get(endpoints.recipesByOwner(ownerId, page, pageSize));
 }

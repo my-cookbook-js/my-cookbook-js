@@ -4,14 +4,14 @@ import { createSubmitHandler, parseQuery } from '../utils.js';
 import { spinner } from './common.js';
 
 
-const catalogTemplate = (recipePromise, onSearch, page, search, category, categories, onSelect) => html`
+const catalogTemplate = (recipePromise, onSearch, page, search, category, authorId, categories, onSelect) => html`
 <section id="catalog">
     <div>
         <label class="category-label">
             <span>Category:</span>
             <select @change=${onSelect} name="category">
-                ${categories.map(c => html`
-                <option>${c.name}</option>`)}
+                <option value="none" selected hidden>Select an Option</option>
+                ${categories.map(c => optionTemplate(c.name, category))}
             </select>
         </label>
         <form @submit=${onSearch} id="searchForm">
@@ -20,23 +20,31 @@ const catalogTemplate = (recipePromise, onSearch, page, search, category, catego
         </form>
     </div>
     
-    ${until((async () => recipeList(await recipePromise, page, search, category))(), spinner())}
+    ${until((async () => recipeList(await recipePromise, page, search, category, authorId))(), spinner())}
     
 </section>`;
 
-function recipeList({results: recipes, count}, page, search, category) {
+function optionTemplate(name, category) {
+    if (name.toLocaleLowerCase() == category) {
+        return html`<option selected>${name}</option>`;
+    } else {
+        return html`<option>${name}</option>`;
+    }
+}
+
+function recipeList({results: recipes, count}, page, search, category, authorId) {
     const pages = Math.ceil(count / pageSize);
 
     return html`
     ${pages > 1 ? html`<header class="section-title">
-                            ${pager(page, pages, search, category)}
+                            ${pager(page, pages, search, category, authorId)}
                         </header>` : null}
 
     ${recipes.length > 0 ? recipes.map(recipePreview) : html`
                                             <div class="section-title">No recipes found.</div>`}
 
     ${pages > 1 ? html`<footer class="section-title">
-                            ${pager(page, pages, search, category)}
+                            ${pager(page, pages, search, category, authorId)}
                         </footer>` : null}`;
 }
 
@@ -50,39 +58,51 @@ const recipePreview = (recipe) => html`
     </article>
 </a>`;
 
-const pager = (page, pages, search, category) => html`
+const pager = (page, pages, search, category, authorId) => html`
 Page ${page} of ${pages}
-${page > 1 ? html`<a class="pager" href=${'/recipes' + createQuery(page - 1, category, search)}>&lt;
+${page > 1 ? html`<a class="pager" href=${createQuery(page - 1, category, search, authorId)}>&lt;
     Prev</a>` : ''}
-${page < pages ? html`<a class="pager" href=${'/recipes' + createQuery(page + 1, category, search)}>Next
+${page < pages ? html`<a class="pager" href=${createQuery(page + 1, category, search, authorId)}>Next
     &gt;</a>` : ''}`;
 
-function createQuery(page, category, search) {
+function createQuery(page, category, search, authorId) {
+    let url = `/recipes?page=${page}`;
+    
+    if (search) {
+        return url + `&search=${encodeURIComponent(search)}`;
+    }
     if (category) {
-        return `?page=${page}${(category ? `&category=${category}` : '')}`;
-    } else {
-        return `?page=${page}${(search ? `&search=${search}` : '')}`;
-    }  
+        url += `&category=${encodeURIComponent(category)}`;
+    }
+    if (authorId) {
+        url += `&author=${encodeURIComponent(authorId)}`;
+    }
+    
+    return url;
 }
 
 export function catalogPage(ctx) {
-    let { page, search, category } = parseQuery(ctx.querystring);
+    let { page, search, category, author } = parseQuery(ctx.querystring);
     const categoryId = getCategoryId(category);    
 
-    const recipesPromise = getRecipes(page || 1, search || '', categoryId || '');
+    const recipesPromise = getRecipes(page || 1, search || '', categoryId || '', author || '');
 
-    ctx.render(catalogTemplate(recipesPromise, createSubmitHandler(onSearch, 'search'), page || 1, search || '', category || '', ctx.categories, onSelect));
+    ctx.render(catalogTemplate(recipesPromise, createSubmitHandler(onSearch, 'search'), page || 1, search || '', category || '', author || '', ctx.categories, onSelect));
 
     function onSearch({ search }) {
+        let url = '/recipes';
         if (search) {
-            ctx.page.redirect(`/recipes?search=${encodeURIComponent(search)}`);
-        } else {
-            ctx.page.redirect('/recipes');
+            url += `?search=${encodeURIComponent(search)}`;
         }
+        ctx.page.redirect(url);
     }
 
     function onSelect(event) {
-        ctx.page.redirect(`/recipes?category=${encodeURIComponent(event.target.value.toLocaleLowerCase())}`);
+        let url = `/recipes?category=${encodeURIComponent(event.target.value.toLocaleLowerCase())}`;
+        if (author) {
+            url += `&author=${encodeURIComponent(author)}`;
+        }
+        ctx.page.redirect(url);
     }
 
     function getCategoryId(category) {
