@@ -10,7 +10,8 @@ export const endpoints = {
     recipeSearch: (query, page, pageSize) => `/classes/Recipe?where=${createQuery(query)}&skip=${(page - 1) * pageSize}&limit=${pageSize}&order=name&count=1`,
     recipeById: (id) => `/classes/Recipe/${id}?include=category&include=owner`,
     createRecipe: '/classes/Recipe',
-    categories: '/classes/Category?order=name'
+    categories: '/classes/Category?order=name',
+    emailVerification: '/verificationEmailRequest'
 };
 
 export function createPointerQuery([...propName], [...className], [...objectId]) {
