@@ -7,15 +7,15 @@ import { errorMsg, field } from './common.js';
 const registerTemplate = (onSubmit, errors, data) => html`
 <section id="register">
     <article>
-        <h2>Register</h2>
+        <h2>Регистрация</h2>
         <form @submit=${onSubmit} id="loginForm">
             ${errorMsg(errors)}
 
-            ${field({label: 'Username', name: 'username', value: data.username, error: errors.username})}
-            ${field({label: 'E-Mail', name: 'email', value: data.email, error: errors.email})}
-            ${field({label: 'Password', type: 'password', name: 'password', error: errors.password})}
-            ${field({label: 'Repeat', type: 'password', name: 'repass', error: errors.repass})}
-            <input type="submit" value="Register">
+            ${field({label: 'Потребител', name: 'username', value: data.username, error: errors.username})}
+            ${field({label: 'E-mail', name: 'email', value: data.email, error: errors.email})}
+            ${field({label: 'Парола', type: 'password', name: 'password', error: errors.password})}
+            ${field({label: 'Повторение', type: 'password', name: 'repass', error: errors.repass})}
+            <input type="submit" value="Регистрация">
         </form>
     </article>
 </section>`;
@@ -33,11 +33,11 @@ export function registerPage(ctx) {
 
             if (missing.length > 0) {
                 throw missing
-                .reduce((acc, [k]) => Object.assign(acc, {[k]: true}), {message: 'Please fill all fields.'});
+                .reduce((acc, [k]) => Object.assign(acc, {[k]: true}), {message: 'Моля попълнете всички полета.'});
             }
             if (data.password != data.repass) {
                 throw {
-                    message: 'Paswords don\'t match.',
+                    message: 'Паролите не съвпадат.',
                     password: true,
                     repass: true
                 };

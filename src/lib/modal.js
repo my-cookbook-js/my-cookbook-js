@@ -10,13 +10,13 @@ modalDiv.appendChild(msg);
 
 const okButton = document.createElement('button');
 okButton.id = 'modal-ok';
-okButton.textContent = 'OK';
+okButton.textContent = 'Да';
 modalDiv.appendChild(okButton);
 okButton.addEventListener('click', () => onChoice(true));
 
 const cancelButton = document.createElement('button');
 cancelButton.id = 'modal-cancel';
-cancelButton.textContent = 'Cancel';
+cancelButton.textContent = 'Отказ';
 modalDiv.appendChild(cancelButton);
 cancelButton.addEventListener('click', () => onChoice(false));
 

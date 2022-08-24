@@ -6,16 +6,16 @@ import { spinner } from './common.js';
 const homeTemplate = (dataPromise) => html`
 <section id="home">
     <div class="hero">
-        <h2>Welcome to My Cookbook</h2>
+        <h2>Добре Дошли в Моите Рецепти</h2>
     </div>
-    <header class="section-title">Recently added recipes</header>
+    <header class="section-title">Последно добавени рецепти</header>
     <div class="recent-recipes">
         
         ${until(dataPromise, spinner())}
         
     </div>
     <footer class="section-title">
-        <p>Browse all recipes in the <a href="/recipes">Catalog</a></p>
+        <p>Разгледайте всички рецепти в <a href="/recipes">Каталог</a></p>
     </footer>
 </section>`;
 
@@ -35,7 +35,7 @@ async function loadData() {
     const {results: data} = await getRecentRecipes();
     
     if (data.length == 0) {
-        return html`<p>No recipes found.</p>`;
+        return html`<p>Няма намерени рецепти.</p>`;
     } else {
         return data.reduce((acc, curr) => {
             if (acc.length > 0) {

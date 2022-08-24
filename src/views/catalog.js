@@ -8,9 +8,9 @@ const catalogTemplate = (recipePromise, onSearch, page, search, category, author
 <section id="catalog">
     <div>
         <label class="category-label">
-            <span>Category:</span>
+            <span>Категория:</span>
             <select @change=${onSelect} name="category">
-                <option value="none" selected hidden>Select an Option</option>
+                <option value="none" selected hidden>Избери Категория</option>
                 ${categories.map(c => optionTemplate(c.name, category))}
             </select>
         </label>
@@ -41,7 +41,7 @@ function recipeList({results: recipes, count}, page, search, category, authorId)
                         </header>` : null}
 
     ${recipes.length > 0 ? recipes.map(recipePreview) : html`
-                                            <div class="section-title">No recipes found.</div>`}
+                                            <div class="section-title">Няма намерени рецепти.</div>`}
 
     ${pages > 1 ? html`<footer class="section-title">
                             ${pager(page, pages, search, category, authorId)}
@@ -59,10 +59,10 @@ const recipePreview = (recipe) => html`
 </a>`;
 
 const pager = (page, pages, search, category, authorId) => html`
-Page ${page} of ${pages}
+Страница ${page} от ${pages}
 ${page > 1 ? html`<a class="pager" href=${createQuery(page - 1, category, search, authorId)}>&lt;
-    Prev</a>` : ''}
-${page < pages ? html`<a class="pager" href=${createQuery(page + 1, category, search, authorId)}>Next
+    Предишна</a>` : ''}
+${page < pages ? html`<a class="pager" href=${createQuery(page + 1, category, search, authorId)}>Следваща
     &gt;</a>` : ''}`;
 
 function createQuery(page, category, search, authorId) {

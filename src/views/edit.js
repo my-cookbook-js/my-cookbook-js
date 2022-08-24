@@ -27,31 +27,31 @@ function formTemplate(data, onSubmit, categories, errors) {
 
     return html`
     <article>
-        <h2>Edit Recipe</h2>
+        <h2>Редакция на Рецепта</h2>
         <form @submit=${onSubmit} id="editForm">
             ${errorMsg(errors)}
 
-            <label>Category:<select name="category">
+            <label>Категория:<select name="category">
                 ${categories.map(optionTemplate)}
             </select></label>
 
-            ${field({label: 'Name', name: 'name', placeholder: 'Recipe name', value: data.name, error: errors.name})}
-            ${field({label: 'Image', name: 'img', placeholder: 'Image URL', value: data.img, error: errors.img})}
+            ${field({label: 'Име', name: 'name', placeholder: 'Име на рецептата', value: data.name, error: errors.name})}
+            ${field({label: 'Снимка', name: 'img', placeholder: 'Снимка URL', value: data.img, error: errors.img})}
             ${field({
-                label: 'Ingredients', 
+                label: 'Продукти', 
                 type: 'textarea', 
                 name: 'ingredients', 
-                placeholder: 'Enter ingredients on separate lines', 
+                placeholder: 'Попъленете продуктите на отделни редове', 
                 value: data.ingredients, 
                 error: errors.ingredients})}
             ${field({
-                label: 'Preparation', 
+                label: 'Приготвяне', 
                 type: 'textarea', 
                 name: 'steps', 
-                placeholder: 'Enter preparation steps on separate lines', 
+                placeholder: 'Въведете стъпките на приготвяне на отделни редове', 
                 value: data.steps, 
                 error: errors.steps})}
-            <input type="submit" value="Save Changes">
+            <input type="submit" value="Запази">
         </form>
     </article>`;
 }
@@ -73,7 +73,7 @@ export function editPage(ctx) {
             
             if (missing.length > 0) {
                 throw missing
-                .reduce((acc, [k]) => Object.assign(acc, {[k]: true}), {message: 'Please fill all fields.'});
+                .reduce((acc, [k]) => Object.assign(acc, {[k]: true}), {message: 'Моля попълнете всички полета.'});
             }
             const recipe = {
                 name: data.name,
@@ -89,7 +89,7 @@ export function editPage(ctx) {
             
             const result = await updateRecipe(ctx.params.id, recipe);
             event.target.reset();
-            ctx.notify('Recipe updated');
+            ctx.notify('Рецептата е редактирана');
             ctx.page.redirect('/recipes/details/' + recipeId);
 
         } catch (err) {

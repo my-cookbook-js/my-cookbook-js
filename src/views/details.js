@@ -18,18 +18,18 @@ const recipeCard = (recipe, isOwner, onDelete) => html`
     <div class="band">
         <div class="thumb"><img src=${recipe.img}></div>
         <div class="ingredients">
-            <h3>Author: <span><a href="/recipes?author=${recipe.owner.objectId}">${recipe.owner.username}</a></span></h3>
+            <h3>Автор: <span><a href="/recipes?author=${recipe.owner.objectId}">${recipe.owner.username}</a></span></h3>
             <br/>
-            <h3>Category: <span>${recipe.category.name}</span></h3>
+            <h3>Категория: <span>${recipe.category.name}</span></h3>
             <br/>
-            <h3>Ingredients:</h3>
+            <h3>Продукти:</h3>
             <ul>
                 ${recipe.ingredients.map(i => html`<li>${i}</li>`)}
             </ul>
         </div>
     </div>
     <div class="description">
-        <h3>Preparation:</h3>
+        <h3>Приготвяне:</h3>
         ${recipe.steps.map(s => html`<p>${s}</p>`)}
     </div>
     ${isOwner ? controls(recipe.objectId, onDelete) : null}
@@ -37,8 +37,8 @@ const recipeCard = (recipe, isOwner, onDelete) => html`
 
 const controls = (id, onDelete) => html`
 <div class="controls">
-    <a class="actionLink" href="/recipes/details/edit/${id}">&#x270e; Edit</a>
-    <a @click=${onDelete} class="actionLink" href="javascript:void(0)">&#x2716; Delete</a>
+    <a class="actionLink" href="/recipes/details/edit/${id}">&#x270e; Редакция</a>
+    <a @click=${onDelete} class="actionLink" href="javascript:void(0)">&#x2716; Изтриване</a>
 </div>`;
 
 export function detailsPage(ctx) {
@@ -52,7 +52,7 @@ export function detailsPage(ctx) {
     async function onSelect(choice) {
         if (choice) {
             await deleteRecipe(recipeId);
-            ctx.notify('Recipe deleted');
+            ctx.notify('Рецептата е изтрита');
             ctx.page.redirect('/recipes');
         }
     }

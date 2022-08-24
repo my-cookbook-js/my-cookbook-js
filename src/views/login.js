@@ -7,13 +7,13 @@ import { errorMsg, field } from './common.js';
 const loginTemplate = (onSubmit, errors, data) => html`
 <section id="login">
     <article>
-        <h2>Login</h2>
+        <h2>Вход</h2>
         <form @submit=${onSubmit} id="loginForm">
             ${errorMsg(errors)}
 
-            ${field({label: 'Username', name: 'username', value: data.username, error: errors.username})}
-            ${field({label: 'Password', type: 'password', name: 'password', error: errors.password})}
-            <input type="submit" value="Login">
+            ${field({label: 'Потребител', name: 'username', value: data.username, error: errors.username})}
+            ${field({label: 'Парола', type: 'password', name: 'password', error: errors.password})}
+            <input type="submit" value="Вход">
         </form>
     </article>
 </section>`;
@@ -29,7 +29,7 @@ export function loginPage(ctx) {
         try {
             if (username == '' || password == '') {
                 throw {
-                    message: 'Please fill all fields.',
+                    message: 'Моля попълнете всички полета.',
                     username: true,
                     password: true
                 };
