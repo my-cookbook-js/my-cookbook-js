@@ -11,7 +11,8 @@ export const endpoints = {
     recipeById: (id) => `/classes/Recipe/${id}?include=category&include=owner`,
     createRecipe: '/classes/Recipe',
     categories: '/classes/Category?order=name',
-    emailVerification: '/verificationEmailRequest'
+    emailVerification: '/verificationEmailRequest',
+    passwordReset: '/requestPasswordReset'
 };
 
 export function createPointerQuery([...propName], [...className], [...objectId]) {

@@ -14,6 +14,8 @@ const loginTemplate = (onSubmit, errors, data) => html`
             ${field({label: 'Потребител', name: 'username', value: data.username, error: errors.username})}
             ${field({label: 'Парола', type: 'password', name: 'password', error: errors.password})}
             <input type="submit" value="Вход">
+            <a href="/profile/lostpass">Забравена парола</a>
+            
         </form>
     </article>
 </section>`;

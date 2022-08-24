@@ -49,14 +49,14 @@ function recipeList({results: recipes, count}, page, search, category, authorId)
 }
 
 const recipePreview = (recipe) => html`
-<a class="card" href="recipes/details/${recipe.objectId}">
-    <article class="preview">
+<article class="preview">
+    <a class="card" href="recipes/details/${recipe.objectId}">
         <div class="title">
             <h2>${recipe.name}</h2>
         </div>
         <div class="small"><img src=${recipe.img}></div>
-    </article>
-</a>`;
+    </a>
+</article>`;
 
 const pager = (page, pages, search, category, authorId) => html`
 Страница ${page} от ${pages}

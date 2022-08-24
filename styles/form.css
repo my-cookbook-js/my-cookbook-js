@@ -99,3 +99,7 @@ p.error {
     color: black;
     border-radius: 5px;
 }
+
+form a {
+    text-decoration: none;
+}

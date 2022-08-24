@@ -11,6 +11,7 @@ import { catalogPage } from './views/catalog.js';
 import { createPage } from './views/create.js';
 import { detailsPage } from './views/details.js';
 import { editPage } from './views/edit.js';
+import { passwordResetPage } from './views/lostPass.js';
 
 
 page(decorateContext());
@@ -19,6 +20,7 @@ page(notify());
 page('/', homePage);
 page('/login', loginPage);
 page('/register', registerPage);
+page('/profile/lostpass', passwordResetPage);
 page('/recipes', categories(), catalogPage);
 page('/recipes/create', categories(), createPage);
 page('/recipes/details/:id', showModal(), detailsPage);
