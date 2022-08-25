@@ -7,13 +7,10 @@ import { spinner } from './common.js';
 const catalogTemplate = (recipePromise, onSearch, page, search, category, authorId, categories, onSelect) => html`
 <section id="catalog">
     <div>
-        <label class="category-label">
-            <span>Категория:</span>
-            <select @change=${onSelect} name="category">
-                <option value="none" selected hidden>Избери Категория</option>
-                ${categories.map(c => optionTemplate(c.name, category))}
-            </select>
-        </label>
+        <select id="catalog-select" @change=${onSelect} name="category">
+            <option value="none" selected hidden>Избери Категория</option>
+            ${categories.map(c => optionTemplate(c.name, category))}
+        </select>
         <form @submit=${onSearch} id="searchForm">
             <input type="text" name="search" .value=${search}>
             <input type="submit" value="Search">

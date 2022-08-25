@@ -99,8 +99,8 @@ article h2 span {
 }
 
 .small>img {
-    max-width: 200px;
-    max-height: 150px;
+    width: 200px;
+    height: 135px;
     margin: 16px auto;
     display: block;
     box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.2), 12px 12px 20px 0 rgba(0, 0, 0, 0.19);
@@ -155,8 +155,8 @@ article h2 span {
 }
 
 .recent-preview>img {
-    max-width: 200px;
-    max-height: 150px;
+    width: 204px;
+    height: 135px;
     margin: 0 auto;
     display: block;
 }

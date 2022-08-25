@@ -66,38 +66,24 @@ p.error {
 }
 
 
-
 #searchForm {
     display: inline-block;
-}
-
-#searchForm > input{
-    width: 200px;
-    position: absolute;
-}
-
-#searchForm > input[type="submit"] {
-    width: 100px;
-    margin-left: 6px;
-}
-
-.category-label {
-    display: inline-block;
-    padding-right: 297px;
-    margin-right: 149px;
-}
-
-.category-label > select {
-    width: 300px;
-}
-
-.category-label > span {
-    background-color: salmon;
     padding: 8px 16px;
-    margin: 0 8px;
-    text-decoration: none;
-    color: black;
-    border-radius: 5px;
+    width: 390px;
+}
+
+#searchForm input{
+    width: 250px;
+    position: static;
+}
+
+/* #searchForm input[type="text"] {
+    text-align: left;
+} */
+
+#searchForm input[type="submit"] {
+    display: inline-block;
+    width: 100px;
 }
 
 form a {
